@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package daos;
+package br.com.springmaven.daos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import models.Visitante;
+import br.com.springmaven.models.Visitante;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,6 +20,12 @@ public class VisitanteDao {
     public static List<Visitante> visitantes;
 
     static {
+        System.out.println("bloco esttico");
+        System.out.println("bloco esttico");
+        System.out.println("bloco esttico");
+        System.out.println("bloco esttico");
+        System.out.println("bloco esttico");
+        System.out.println("bloco esttico");
         System.out.println("bloco esttico");
         visitantes = new ArrayList<>();
         visitantes.add(new Visitante(1, "vi1"));
@@ -39,7 +44,8 @@ public class VisitanteDao {
     }
 
     public Visitante[] getAll() {
-        return (Visitante[]) visitantes.toArray();
+        Visitante[] stockArr = visitantes.toArray(new Visitante[visitantes.size()]);
+        return stockArr;
     }
 
     public void insert(Visitante visitante) {

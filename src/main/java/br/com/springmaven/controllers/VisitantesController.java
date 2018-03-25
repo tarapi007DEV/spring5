@@ -5,13 +5,12 @@
  */
 package br.com.springmaven.controllers;
 
-import daos.VisitanteDao;
-import java.util.List;
-import models.Visitante;
+import br.com.springmaven.daos.VisitanteDao;
+import br.com.springmaven.models.Visitante;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/visitantes")
 public class VisitantesController {
+
+    @Autowired
+    private VisitanteDao vDao;
 
     // EXEMPLO DE REQUEST MAPPING USANDO PATH VARIABLE
     @RequestMapping(value = "/get/{id}",
@@ -56,14 +58,7 @@ public class VisitantesController {
     @RequestMapping(value = "/getAll")
     @ResponseBody
     public Visitante[] getAllVisitantes() {
-//        Visitante[] visitantes = new Visitante[]{new Visitante(), new Visitante(), new Visitante()};
-//        for (int i = 0; i < 3; i++) {
-//            visitantes[i].setId(i);
-//            visitantes[i].setNome("nome" + i);
-//
-//        }
-//        return visitantes;
-        return new VisitanteDao().getAll();
+        return vDao.getAll();
     }
 
     // EXEMPLO DE REQUEST MAPPING LISTANDO UM ARRAY DE ENTIDADES
@@ -75,13 +70,13 @@ public class VisitantesController {
     }
 
     @GetMapping("/add")
-    public void add(@RequestParam("id") int id, @RequestParam("nome") String nome){
+    public void add(@RequestParam("id") int id, @RequestParam("nome") String nome) {
         new VisitanteDao().insert(new Visitante(id, nome));
     }
-    
+
     @GetMapping("/delete")
-    public void delete(@RequestParam("id") int id){
+    public void delete(@RequestParam("id") int id) {
         new VisitanteDao().delete(id);
     }
-    
+
 }
