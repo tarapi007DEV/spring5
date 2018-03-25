@@ -13,7 +13,22 @@ public class Visitante {
     private int id;
     private String nome;
 
+    public Visitante() {
+    }
 
+
+    
+    public Visitante(int id, String nome) {
+        this.id=id;
+        this.nome=nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    
     public void setId(int id) {
         this.id = id;
     }

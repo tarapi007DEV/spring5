@@ -1,7 +1,0 @@
-br\com\springmaven\spring4\HelloWorldInitializer.class
-models\Resposta.class
-br\com\springmaven\spring4\HelloWorldConfiguration.class
-enums\ResponseStatus.class
-br\com\springmaven\spring4\HelloWorldController.class
-br\com\springmaven\controllers\ExameController.class
-models\Visitante.class
