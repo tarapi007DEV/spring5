@@ -6,6 +6,7 @@
 package br.com.springmaven.controllers;
 
 import br.com.springmaven.daos.VisitanteDao;
+import br.com.springmaven.models.Resposta;
 import br.com.springmaven.models.Visitante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,22 +63,39 @@ public class VisitantesController {
         return vDao.getAll();
     }
 
-    // EXEMPLO DE REQUEST MAPPING LISTANDO UM ARRAY DE ENTIDADES
-    @PostMapping("/postMapping")
+    // EXEMPLO DE REQUEST MAPPING 
+    @RequestMapping(value = "/postMapping", method = RequestMethod.POST)
     public String postMapping(Model model) {
         model.addAttribute("param1", "valuepar1");
         return "saida";
-
     }
 
-    @GetMapping("/add")
-    public void add(@RequestParam("id") int id, @RequestParam("nome") String nome) {
-        new VisitanteDao().insert(new Visitante(id, nome));
+    @GetMapping("/addByGet")
+    public void addByGet(@RequestParam("id") int id, @RequestParam("nome") String nome) {
+        vDao.insert(new Visitante(id, nome));
+    }
+
+    @RequestMapping(value = "/addByPost", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Resposta addByPost(@RequestParam("id") int id, @RequestParam("nome") String nome, Resposta resp) {
+        vDao.insert(new Visitante(id, nome));
+        resp.setStatus(1);
+        return resp;
+    }
+
+    @RequestMapping(value = "/addByJsonPost", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Resposta addByJsonPost(@RequestBody Visitante visitante, Resposta resposta) {
+        vDao.insert(visitante);
+        resposta.setStatus(1);
+        System.out.println("");
+        return resposta;
     }
 
     @GetMapping("/delete")
     public void delete(@RequestParam("id") int id) {
-        new VisitanteDao().delete(id);
+        vDao.delete(id);
     }
 
 }
